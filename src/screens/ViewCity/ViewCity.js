@@ -36,7 +36,7 @@ class ViewCity extends Component {
                 res.docs.forEach(city => {
 
                     console.log(city.data().name)
-                    var a = { name: city.data().name }
+                    var a = { id: city.id, name: city.data().name }
                     this.setState({
                         cities: [...this.state.cities, a]
                     });
@@ -126,7 +126,7 @@ class ViewCity extends Component {
                             </ul>
                             <ul className="formsection citydetailsform">
                                 <li>
-                                    <a href="" className="BoldTextcolor">Add New Sport</a>
+                                    <Link to="/addsport" className="BoldTextcolor">Add New Sport</Link>
                                 </li>
                                 <li>
                                     <a href="" className="BoldTextcolor">&nbsp;</a>
@@ -135,7 +135,7 @@ class ViewCity extends Component {
                             <ul className="formsection citydetailsform">
                                 <li>
                                     <div className="row removemargin">
-                                        <input type="button" value="Add" className="btn_orange" />
+                                        <Link to="/addsport" className="BoldTextcolor"><input type="button" value="Add" className="btn_orange" /></Link>
                                     </div>
                                 </li>
                             </ul>
@@ -149,17 +149,16 @@ class ViewCity extends Component {
                     <div className="table-responsive">
                         <table className="table listtable_city">
                             <thead>
-                                <tr>
+                                <tr align="center">
                                     <th scope="col">No</th>
                                     <th scope="col">City</th>
                                     <th scope="col">Category</th>
                                     <th scope="col">Sport</th>
-                                    <th scope="col">&nbsp</th>
+                                    <th scope="col">Edit</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {this.state.cities.length ? this.state.cities.map((city, index) =>
-                                    // return(
                                     <tr kry={index}>
                                         <td>{index + 1}</td>
                                         <td>{city.name}</td>
@@ -173,7 +172,9 @@ class ViewCity extends Component {
                                                 </ul>
                                             </div>
                                         </td>
-                                        <td align="center"><a href="#" className="Edit_blank">Edit</a></td>
+                                        <td align="center">
+                                            <Link to={"/addcity?" + city.id} className="Edit_blank">Edit</Link>
+                                        </td>
                                     </tr>
                                 )
                                     :

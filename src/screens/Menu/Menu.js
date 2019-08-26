@@ -18,6 +18,9 @@ import profileimg from '../../assets/images/profile-picture-circle-png-5.png';
 import './Menu.css';
 import AddCity from '../AddCity/AddCity';
 import AddCategory from '../AddCategory/AddCategory';
+import BookNPlay from '../BookNPlay/BookNPlay';
+import AddArena from '../AddArena/AddArena';
+import AddSport from '../AddSport/AddSport';
 // import './f.js';
 
 class Menu extends Component {
@@ -100,7 +103,7 @@ class Menu extends Component {
                             <div className="row removemargin">
                                 <div className="col-xl-2">&nbsp;</div>
                                 <div className="col-xl-10">
-                                    <div className="page_title_section">City Details</div>
+                                    {/* <div className="page_title_section">City Details</div> */}
                                 </div>
                             </div>
                             {/* <!--Page Title Section End-->  */}
@@ -146,8 +149,11 @@ class Menu extends Component {
                                 <div className="col-xl-10">
                                     <Route exact path="/" component={ViewCity} />
                                     <Route exact path="/viewcity" component={ViewCity} />
-                                    <Route exact path="/addcity" component={AddCity} />
+                                    <Route path="/addcity" component={AddCity} />
                                     <Route exact path="/addcategory" component={AddCategory} />
+                                    <Route exact path="/addsport" component={AddSport} />
+                                    <Route exact path="/booknplay" component={BookNPlay} />
+                                    <Route exact path="/addarena" component={AddArena} />
                                 </div>
                             </div>
                             <Footer />

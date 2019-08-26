@@ -18,7 +18,7 @@ class AddCategory extends Component {
         const db = firebase.firestore();
 
         db.collection('categories').add({
-            name: categoryName
+            name: categoryName.toLowerCase()
         }).then(() => {
             swal("added succesfully", "", "success");
             this.setState({
@@ -53,7 +53,7 @@ class AddCategory extends Component {
                         <form className="form-inline">
                             <ul className="formsection">
                                 <li>
-                                    <input type="text" placeholder="Category Name" className="textboxcustom" onChange={(e) => this.setState({ categoryName: e.target.value })} />
+                                    <input type="text" placeholder="Category Name" className="textboxcustom" value={this.state.categoryName} onChange={(e) => this.setState({ categoryName: e.target.value })} />
                                 </li>
                                 <li>
                                     <input type="button" value="Add New Category" className="btn_orange" onClick={() => this.onSubmit()} />

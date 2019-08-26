@@ -9,8 +9,37 @@ class AddCity extends Component {
         super();
 
         this.state = {
-            cityName: ""
+            cityName: "",
+            param: ""
         }
+    }
+
+    componentWillMount() {
+        // debugger
+        // let a = this.props.location.search;
+        // console.log(a.slice(1))
+        this.getData()
+    }
+
+    getData() {
+
+        const db = firebase.firestore();
+        let param = this.props.location.search.slice(1);
+
+        if (param) {
+            db.collection('cities').doc(param).get().then(res => {
+
+                if (res.exists) {
+
+                    this.setState({
+                        cityName: res.data().name,
+                        param: param
+                    });
+
+                }
+            })
+        }
+
     }
 
     onSubmit() {
@@ -19,13 +48,28 @@ class AddCity extends Component {
 
         db.collection('cities').add({
             name: cityName
-        }).then(() =>{
-            swal("added succesfully","","success");
+        }).then(() => {
+            swal("added succesfully", "", "success");
             this.setState({
                 cityName: ""
             })
-        }).catch(err =>{
-            swal(err.message,"","error");
+        }).catch(err => {
+            swal(err.message, "", "error");
+        })
+
+    }
+
+    onUpdate() {
+
+        const { cityName, param } = this.state;
+        const db = firebase.firestore();
+
+        db.collection('cities').doc(param).update({
+            name: cityName
+        }).then(() => {
+            swal("Updated succesfully", "", "success");
+        }).catch(err => {
+            swal(err.message, "", "error");
         })
 
     }
@@ -53,10 +97,14 @@ class AddCity extends Component {
                         <form className="form-inline">
                             <ul className="formsection">
                                 <li>
-                                    <input type="text" placeholder="City Name" className="textboxcustom" onChange={(e) => this.setState({ cityName: e.target.value })} />
+                                    <input type="text" placeholder="City Name" className="textboxcustom" value={this.state.cityName} onChange={(e) => this.setState({ cityName: e.target.value })} />
                                 </li>
                                 <li>
-                                    <input type="button" value="Add New City" className="btn_orange" onClick={() => this.onSubmit()} />
+                                    {this.state.param ?
+                                        <input type="button" value="Update City" className="btn_orange" onClick={() => this.onUpdate()} />
+                                    :
+                                        <input type="button" value="Add New City" className="btn_orange" onClick={() => this.onSubmit()} />
+                                    }
                                 </li>
                             </ul>
                         </form>
